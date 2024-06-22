@@ -2,11 +2,16 @@ package com.example.demo.Controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.example.demo.Model.Pessoa;
+import com.example.demo.Form.Pessoa.PessoaForm;
 import com.example.demo.Repository.PessoaRepository;
+
+import jakarta.validation.Valid;
 
 @Controller
 public class PessoaController {
@@ -20,9 +25,13 @@ public class PessoaController {
     }
 
     @PostMapping("/pessoa/create")
-    public String create(Pessoa pessoa){
+    public String create(@Valid PessoaForm pessoaForm, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes){
 
-        pessoaRepository.save(pessoa);
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("errors", bindingResult.getAllErrors());
+            return "/pessoa/create";
+        }
+           pessoaRepository.save(pessoaForm.toEntity());
 
         return "pessoa/create";
     }
