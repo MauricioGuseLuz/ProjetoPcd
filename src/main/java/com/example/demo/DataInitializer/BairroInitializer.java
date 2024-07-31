@@ -1,7 +1,6 @@
 package com.example.demo.DataInitializer;
 
 import org.springframework.stereotype.Component;
-
 import com.example.demo.Model.Bairro;
 import com.example.demo.Repository.BairroRepository;
 
