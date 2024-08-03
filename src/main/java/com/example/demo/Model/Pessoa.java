@@ -1,6 +1,10 @@
 package com.example.demo.Model;
 
+import java.time.LocalDate;
+
 import org.hibernate.annotations.ColumnDefault;
+
+import com.example.demo.Enum.Sexo;
 
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -22,11 +26,25 @@ public class Pessoa {
     @Column(name = "ativo", nullable = false)
     @ColumnDefault("true")
     private boolean ativo = true;
+
+    @Column(name = "dataNascimento", nullable = false)
+    private LocalDate dataNascimento;
     
     @Column(name = "nome", nullable = false, length = 100, unique = false)
     private String nome;
+    
+    @Column(name = "sexo", nullable = false)
+    @ColumnDefault("2")
+    @Enumerated(EnumType.ORDINAL)
+    private Sexo sexo = Sexo.NAO_INFORMADO;
 
-    public Pessoa(String nome){
+    public Pessoa(String nome, LocalDate dataNascimento, Sexo sexo){
         this.nome = nome;
+        this.dataNascimento = dataNascimento;
+        this.sexo = sexo;
+    
     }
+
 }
+
+    
