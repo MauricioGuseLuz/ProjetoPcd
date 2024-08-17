@@ -7,6 +7,7 @@ import org.hibernate.annotations.ColumnDefault;
 import com.example.demo.Enum.Sexo;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -43,6 +44,16 @@ public class Pessoa {
         this.dataNascimento = dataNascimento;
         this.sexo = sexo;
     
+    }
+
+    public void setDeficiencia(@NotNull(message = "Qual sua deficiencia?") Deficiencia deficiencia) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'setDeficiencia'");
+    }
+
+    public @NotNull(message = "Qual sua deficiencia?") Deficiencia getDeficiencias() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getDeficiencias'");
     }
 
 }
