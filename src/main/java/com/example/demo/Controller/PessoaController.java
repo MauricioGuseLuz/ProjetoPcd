@@ -11,7 +11,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import com.example.demo.Form.Pessoa.PessoaForm;
+import com.example.demo.Model.Deficiencia;
 import com.example.demo.Model.Pessoa;
+import com.example.demo.Repository.DeficienciaRepository;
 import com.example.demo.Repository.PessoaRepository;
 
 import jakarta.validation.Valid;
@@ -31,6 +33,8 @@ public class PessoaController {
 
     @Autowired
     private PessoaRepository pessoaRepository;
+    @Autowired
+    private DeficienciaRepository deficienciaRepository;
 
     @GetMapping("/pessoa")
     public String index(Model model, @RequestParam("display") Optional<String> display){
@@ -47,13 +51,19 @@ public class PessoaController {
     
     @GetMapping("/pessoa/create")
     public String create(Model model) {
-        model.addAttribute("pessoaForm", new PessoaForm());
+        PessoaForm pessoaForm = new PessoaForm();
+        List<Deficiencia> listaDeficiencias = deficienciaRepository.findAll();
 
+        pessoaForm.setListDeficiencias(listaDeficiencias);
+
+        model.addAttribute("pessoaForm", pessoaForm);
         return "pessoa/create";
     }
     
     @PostMapping("/pessoa/create")
     public String create(@Valid PessoaForm pessoaForm, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) {
+        List<Deficiencia> listaDeficiencias = deficienciaRepository.findAll();
+        pessoaForm.setListDeficiencias(listaDeficiencias);
         
         if(bindingResult.hasErrors()){
             model.addAttribute("errors", bindingResult.getAllErrors());
