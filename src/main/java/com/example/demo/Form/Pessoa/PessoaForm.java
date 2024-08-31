@@ -52,7 +52,7 @@ public class PessoaForm {
     private String numero;
     private String complemento;
 
-    private List<Pessoa> listDeficiencia;
+    private List<Deficiencia> listDeficiencia;
 
     
     public Pessoa toEntity(){
@@ -62,7 +62,7 @@ public class PessoaForm {
 
     public PessoaForm(Pessoa pessoa){
         this.nome = pessoa.getNome();
-        this.deficiencia = pessoa.getDeficiencias();
+        this.deficiencia = pessoa.getDeficiencia();
     }
     
     

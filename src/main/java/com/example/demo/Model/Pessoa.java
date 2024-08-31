@@ -39,6 +39,14 @@ public class Pessoa {
     @Enumerated(EnumType.ORDINAL)
     private Sexo sexo = Sexo.NAO_INFORMADO;
 
+    @ManyToOne
+    @JoinColumn(name = "deficiencida_id")
+    private Deficiencia deficiencia;
+
+    @ManyToOne
+    @JoinColumn(name = "endereco_id")
+    private Endereco endereco;
+
     public Pessoa(String nome, LocalDate dataNascimento, Sexo sexo){
         this.nome = nome;
         this.dataNascimento = dataNascimento;
@@ -46,15 +54,8 @@ public class Pessoa {
     
     }
 
-    public void setDeficiencia(@NotNull(message = "Qual sua deficiencia?") Deficiencia deficiencia) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'setDeficiencia'");
-    }
-
-    public @NotNull(message = "Qual sua deficiencia?") Deficiencia getDeficiencias() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getDeficiencias'");
-    }
+    
+    
 
 }
 

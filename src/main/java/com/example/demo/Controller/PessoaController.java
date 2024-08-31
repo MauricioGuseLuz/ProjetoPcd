@@ -15,6 +15,7 @@ import com.example.demo.Model.Deficiencia;
 import com.example.demo.Model.Pessoa;
 import com.example.demo.Repository.DeficienciaRepository;
 import com.example.demo.Repository.PessoaRepository;
+import com.example.demo.Service.PessoaService;
 
 import jakarta.validation.Valid;
 
@@ -33,8 +34,12 @@ public class PessoaController {
 
     @Autowired
     private PessoaRepository pessoaRepository;
+    
     @Autowired
     private DeficienciaRepository deficienciaRepository;
+
+    @Autowired
+    private PessoaService pessoaService;
 
     @GetMapping("/pessoa")
     public String index(Model model, @RequestParam("display") Optional<String> display){
@@ -57,6 +62,8 @@ public class PessoaController {
         pessoaForm.setListDeficiencias(listaDeficiencias);
 
         model.addAttribute("pessoaForm", pessoaForm);
+
+        
         return "pessoa/create";
     }
     
@@ -64,6 +71,8 @@ public class PessoaController {
     public String create(@Valid PessoaForm pessoaForm, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) {
         List<Deficiencia> listaDeficiencias = deficienciaRepository.findAll();
         pessoaForm.setListDeficiencias(listaDeficiencias);
+
+        model.addAttribute("pessoaForm", pessoaForm);
         
         if(bindingResult.hasErrors()){
             model.addAttribute("errors", bindingResult.getAllErrors());
@@ -71,7 +80,7 @@ public class PessoaController {
         }
 
         redirectAttributes.addFlashAttribute("successMessage", "Salvo com sucesso!");
-        pessoaRepository.save(pessoaForm.toEntity());
+        pessoaService.create(pessoaForm);
         
         return "redirect:/pessoa";
     }
